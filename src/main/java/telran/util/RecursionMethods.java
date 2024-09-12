@@ -24,9 +24,21 @@ public class RecursionMethods {
      * 3. bitwise operators like >>, <<, &&, etc disallowe
      */
     public static long pow(int num, int degree){
-        //TODO
-        throw new UnsupportedOperationException();
+        if (degree < 0) {
+            throw new IllegalArgumentException();
+        }
+        return degree == 0 ? 1 : multiply(num, pow(num, degree - 1));
     }
+
+    private static long multiply(long num, long times) {
+        if(times < 0) {
+            times = -times;
+            num = -num;
+        }
+        return times == 0 ? 0 : num + multiply(num, times - 1);
+    }
+
+
     public static int sum(int [] array) {
 
         return sum(array, array.length);
@@ -46,9 +58,16 @@ public class RecursionMethods {
      * 5. no additional fields of the class RecursionMethods are allowed
      */
     public static int square(int x) {
-        //TODO
-        throw new UnsupportedOperationException();
+        int res = 0;
+        if(x < 0) {
+            x = - x;
+        }
+        if(x != 0) {
+            res = x + (square(x - 1) + (x - 1));
+        } 
+        return res;
     }
+
     /**
      * 
      * @param string
@@ -62,7 +81,22 @@ public class RecursionMethods {
      *     2.3 substring(int beginIndex)
      */
     public static boolean isSubstring(String string, String subString) {
-        //TODO
-        throw new UnsupportedOperationException();
+        if (subString.length() > string.length()) {
+            return false;
+        }
+        if(string.charAt(0) == subString.charAt(0)) {
+            return substringCheck(string, subString, 0);
+        }
+        return isSubstring(string.substring(1), subString);
+    }
+
+    private static boolean substringCheck(String string, String subString, int index) {
+        if(string.charAt(index) != subString.charAt(index)) {
+            return false;
+        } else if (index == subString.length() - 1) {
+            return true;
+        } else {
+            return substringCheck(string, subString, index + 1);
+        } 
     }
 }
